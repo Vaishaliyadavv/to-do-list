@@ -1,6 +1,7 @@
 //SELECT ELEMENTS 
 const form = document.getElementById('todoform');
 const todoInput = document.getElementById('newtodo');
+const todosListEl = document.getElementById('todos-list');
 
 //VARS
 let todos = [];
@@ -10,7 +11,7 @@ form.addEventListener('submit', function (event) {
     event.preventDefault();
 
     saveTodo();
-
+    renderTodos();
 });
 
 
@@ -35,18 +36,37 @@ function saveTodo() {
     }
 
     else {
-        const todo = {
+        todos.push({
             value: todoValue,
             checked: false,
             color: '#' + Math.floor(Math.random() * 16777215).toString(16)
 
-        }
-
-        todos.push(todo);
-
-        console.log(todos);
+        });
+        todoInput.value = '';
 
     }
 
 
+}
+
+//RENDER TODOS
+
+function renderTodos() {
+    //CLEAR ELEMENT BEFORE A RE-RENDER
+    todosListEl.innerHTML = "";
+
+    //RENDER TODOS
+    todos.forEach((todo, index) => {
+        todosListEl.innerHTML += ` 
+        <div class="todo" id=${index}>
+        <i 
+        class="bi ${todo.checked ? 'bi-check-circle-fill' : 'bi-circle'}"
+        style="color : ${todo.color}"
+        ></i>
+        <p class="">${todo.value}</p>
+        <i class="bi bi-pencil-square"></i>
+        <i class="bi bi-trash"></i>
+        
+        </div>`
+    });
 }
