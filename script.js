@@ -19,14 +19,34 @@ form.addEventListener('submit', function (event) {
 function saveTodo() {
     const todoValue = todoInput.value
 
-    const todo = {
-        value: todoValue,
-        checked: false,
-        color: '#' + Math.floor(Math.random() * 16777215).toString(16)
+    //check if the todo is empty
+    const isEmpty = todoValue === '';
+
+    //check for duplicates
+    const isDuplicate =
+        todos.some((todo) => todo.value.toUpperCase() === todoValue.toUpperCase());
+
+    if (isEmpty) {
+        alert("Todo's input is empty");
+    }
+
+    else if (isDuplicate) {
+        alert('Todo already exists!');
+    }
+
+    else {
+        const todo = {
+            value: todoValue,
+            checked: false,
+            color: '#' + Math.floor(Math.random() * 16777215).toString(16)
+
+        }
+
+        todos.push(todo);
+
+        console.log(todos);
 
     }
 
-    todos.push(todo);
 
-    console.log(todos);
 }
